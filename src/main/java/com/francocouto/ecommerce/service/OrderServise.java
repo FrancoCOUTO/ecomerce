@@ -36,10 +36,16 @@ public class OrderServise {
 	
 	@Autowired
 	private OrderItemRepository orderItemRepository;
+	
+	@Autowired
+	private AuthServisse authServisse;
+	
+	
 
 	@Transactional(readOnly = true)
 	public OrderDTO findById(Long id) {
 		Order order = orderRepo.findById(id).orElseThrow(()-> new ResourceAccessException("Recurso nao encontrado"));
+		authServisse.validationSelfOrAdimin(order.getClient().getId());
 		return new OrderDTO(order);
 
 	}
@@ -47,7 +53,7 @@ public class OrderServise {
 	
 	@Transactional
 	public OrderDTO insert (OrderDTO dto) {
-		
+	
 		Order order = new Order();
 		order.setMoment(Instant.now());
 		order.setStatus(OrderStatus.WAITING_PAYMENT);
