@@ -8,6 +8,7 @@ import com.francocouto.ecommerce.entities.Product;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 
@@ -20,6 +21,7 @@ public class ProductMinDTO {
 	@NotBlank(message = "Campo requerido")
 	@Size(min = 10, max = 300, message = "Esse campo precisa ter entre 10 e 300 caracteres")
 	private String description;
+	@NotNull(message = "O preço não pode ser nulo")
 	@Positive(message = "O preco deve ser posotivo")
 	private Double price;
 	private String imgUrl;

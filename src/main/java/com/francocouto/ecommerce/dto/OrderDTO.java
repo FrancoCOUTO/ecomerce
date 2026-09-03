@@ -16,7 +16,7 @@ public class OrderDTO {
 	private Instant moment;
 	private OrderStatus status;
 	
-	private UserMinDTO client;
+	private UserDTO client;
 	
 	private PaymentDTO payment;
 	
@@ -24,7 +24,7 @@ public class OrderDTO {
 	private List<OrderItemDTO> items = new ArrayList<>();
 	
 	
-	public OrderDTO(Long id, Instant moment, OrderStatus status, UserMinDTO clent, PaymentDTO payment) {
+	public OrderDTO(Long id, Instant moment, OrderStatus status, UserDTO clent, PaymentDTO payment) {
 		this.id = id;
 		this.moment = moment;
 		this.status = status;
@@ -36,7 +36,7 @@ public class OrderDTO {
 		id = order.getId();
 		moment = order.getMoment();
 		status = order.getStatus();
-		client = new UserMinDTO(order.getClient());
+		client = new UserDTO(order.getClient());
 		payment = (order.getPayment() == null ? null : new PaymentDTO(order.getPayment()));
 		for(OrderItem item : order.getOrderItem()) {
 			items.add(new OrderItemDTO(item));
@@ -55,7 +55,7 @@ public class OrderDTO {
 		return status;
 	}
 
-	public UserMinDTO getClient() {
+	public UserDTO getClient() {
 		return client;
 	}
 

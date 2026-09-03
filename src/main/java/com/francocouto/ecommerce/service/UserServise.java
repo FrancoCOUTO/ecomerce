@@ -12,7 +12,7 @@ import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.francocouto.ecommerce.dto.UserMinDTO;
+import com.francocouto.ecommerce.dto.UserDTO;
 import com.francocouto.ecommerce.entities.Role;
 import com.francocouto.ecommerce.entities.User;
 import com.francocouto.ecommerce.projections.UserDetailProjection;
@@ -59,9 +59,9 @@ public class UserServise implements UserDetailsService {
 		}
 	}
 		@Transactional(readOnly = true)	
-		public UserMinDTO getMe() {
+		public UserDTO getMe() {
 		User user = authenticated();
-		return new UserMinDTO(user);
+		return new UserDTO(user);
 	}
 
 }

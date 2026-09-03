@@ -35,7 +35,7 @@ public class ProductController {
 	
 
 	
-	@GetMapping()
+	@GetMapping
 	public ResponseEntity<Page<ProductProjectionDTO>> searchByName(@RequestParam(defaultValue = "")String name ,Pageable page){
 		Page<ProductProjectionDTO> dto = servise.searchByName(name, page);
 		return ResponseEntity.ok(dto);

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.francocouto.ecommerce.dto.UserMinDTO;
+import com.francocouto.ecommerce.dto.UserDTO;
 import com.francocouto.ecommerce.service.UserServise;
 
 @Controller
@@ -19,8 +19,8 @@ public class UserController {
 	
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_CLIENT')")
 	@GetMapping(value = "/me")
-	public ResponseEntity<UserMinDTO> getMe() {
-		UserMinDTO user = userServise.getMe();
+	public ResponseEntity<UserDTO> getMe() {
+		UserDTO user = userServise.getMe();
 		return ResponseEntity.ok(user);
 		
 	}
