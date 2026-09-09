@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.francocouto.ecommerce.dto.CategoryDTO;
@@ -47,7 +48,7 @@ public class CategoryServce {
 		return new CategoryDTO(category);
 	}
 
-	@Transactional
+	@Transactional(propagation = Propagation.SUPPORTS)
 	public void delete(Long id) {
 		if (!catRepo.existsById(id)) {
 			throw new ResourseNotFoundExeption(id);

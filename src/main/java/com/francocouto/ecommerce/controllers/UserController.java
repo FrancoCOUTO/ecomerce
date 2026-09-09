@@ -43,7 +43,7 @@ public class UserController {
 		return ResponseEntity.created(uri).body(dto);
 
 }
-	
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_CLIENT')")
 	@PutMapping(value = "/{id}")
 	public ResponseEntity<UserDTO> update(@PathVariable Long id, @Valid @RequestBody UserInsertDTO dto){
 		UserDTO userDto = userServise.update(id, dto);
@@ -51,8 +51,8 @@ public class UserController {
 		
 		
 	}
-	
-	@DeleteMapping
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<Void> delet(@PathVariable Long id){
 		userServise.delete(id);
 		return ResponseEntity.noContent().build();

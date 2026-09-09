@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.francocouto.ecommerce.dto.UserDTO;
@@ -26,10 +27,14 @@ public class UserServise implements UserDetailsService {
 
 	@Autowired
 	private UserRepository userRepo;
-	
+
 	@Autowired
 	private PasswordEncoder encoder;
 
+	@Autowired
+	private AuthServisse auth;
+	
+	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		List<UserDetailProjection> proj = userRepo.searchUserAndRolesByEmail(username);
@@ -64,85 +69,52 @@ public class UserServise implements UserDetailsService {
 			throw new UsernameNotFoundException("Usuário inválido ou não encontrado");
 		}
 	}
-		@Transactional(readOnly = true)	
-		public UserDTO getMe() {
+
+	@Transactional(readOnly = true)
+	public UserDTO getMe() {
 		User user = authenticated();
 		return new UserDTO(user);
 	}
 
-		@Transactional	
-		public UserDTO insert(UserInsertDTO dto) {
-			User user = new User();
-			user.setEmail(dto.getEmail());
-			user.setName(dto.getName());
-			user.setBirthDate(dto.getBirthDate());
-			user.setPhone(dto.getPhone());
+	@Transactional
+	public UserDTO insert(UserInsertDTO dto) {
+		User user = new User();
+		user.setEmail(dto.getEmail());
+		user.setName(dto.getName());
+		user.setBirthDate(dto.getBirthDate());
+		user.setPhone(dto.getPhone());
+		user.setPassword(encoder.encode(dto.getPassword()));
+		Role role = new Role();
+		role.setId(1L);
+		user.addRole(role);
+		userRepo.save(user);
+		return new UserDTO(user);
+
+	}
+
+	@Transactional
+	public UserDTO update(Long id, UserInsertDTO dto) {
+		auth.validationSelfOrAdimin(id);
+		User user = userRepo.findById(id).orElseThrow(() -> new ResourseNotFoundExeption(id));
+
+		user.setName(dto.getName());
+		user.setEmail(dto.getEmail());
+		user.setBirthDate(dto.getBirthDate());
+		user.setPhone(dto.getPhone());
+		if (dto.getPassword() != null && !dto.getPassword().isBlank()) {
 			user.setPassword(encoder.encode(dto.getPassword()));
-			Role role = new Role();
-			role.setId(1L);
-			user.addRole(role);
-			userRepo.save(user);
-			return new UserDTO(user);
-	
 		}
-		
-		public UserDTO update(Long id , UserInsertDTO dto) {
-			User user = userRepo.getReferenceById(id);
-			
-			user.setName(dto.getName());
-			user.setEmail(dto.getEmail());
-			user.setBirthDate(dto.getBirthDate());
-			user.setPhone(dto.getPhone());
-			if (dto.getPassword() != null && !dto.getPassword().isBlank()) {
-		        user.setPassword(encoder.encode(dto.getPassword()));
-		    }
-			user = userRepo.save(user);
-			return new UserDTO(user);
-			
-			
-		}
-		
-		public void delete(Long id) {
-			userRepo.deleteById(id);
-		}
+		user = userRepo.save(user);
+		return new UserDTO(user);
 
-		
+	}
+
+	@Transactional(propagation = Propagation.SUPPORTS)
+	public void delete(Long id) {
+		if (!userRepo.existsById(id)) {
+			throw new ResourseNotFoundExeption(id);
+		}
+		userRepo.deleteById(id);
+	}
+
 }
-
-
-		
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
