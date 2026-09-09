@@ -2,6 +2,7 @@ package com.francocouto.ecommerce.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,6 +29,7 @@ public class OrderController {
 		
 	}
 	
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_CLIENT')")
 	@PostMapping(value = "/new")
 	public ResponseEntity<OrderDTO> insert (@RequestBody OrderDTO dto){
 		OrderDTO orderDto = orderService.insert(dto);
