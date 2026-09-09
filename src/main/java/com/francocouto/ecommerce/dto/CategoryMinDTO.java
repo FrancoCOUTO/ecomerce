@@ -2,8 +2,11 @@ package com.francocouto.ecommerce.dto;
 
 import com.francocouto.ecommerce.entities.Category;
 
+import jakarta.validation.constraints.NotBlank;
+
 public class CategoryMinDTO {
 	
+	@NotBlank(message = "O campo nome nao pode ser nulo")
 	private String name;
 	
 	public CategoryMinDTO () {

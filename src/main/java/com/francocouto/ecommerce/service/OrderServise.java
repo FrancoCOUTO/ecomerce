@@ -53,7 +53,6 @@ public class OrderServise {
 	
 	@Transactional
 	public OrderDTO insert (OrderDTO dto) {
-	
 		Order order = new Order();
 		order.setMoment(Instant.now());
 		order.setStatus(OrderStatus.WAITING_PAYMENT);
