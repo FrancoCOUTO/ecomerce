@@ -22,7 +22,7 @@ import com.francocouto.ecommerce.service.UserServise;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping(value = "/user")
+@RequestMapping(value = "/users")
 public class UserController {
 	
 	@Autowired

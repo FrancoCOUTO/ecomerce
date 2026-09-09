@@ -29,7 +29,7 @@ import com.francocouto.ecommerce.service.ProductServise;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping(value = "/product")
+@RequestMapping(value = "/products")
 
 public class ProductController {
 

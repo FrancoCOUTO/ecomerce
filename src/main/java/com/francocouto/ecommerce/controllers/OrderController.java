@@ -30,7 +30,7 @@ public class OrderController {
 	}
 	
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_CLIENT')")
-	@PostMapping(value = "/new")
+	@PostMapping
 	public ResponseEntity<OrderDTO> insert (@RequestBody OrderDTO dto){
 		OrderDTO orderDto = orderService.insert(dto);
 		return ResponseEntity.ok(orderDto);
