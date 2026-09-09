@@ -1,5 +1,7 @@
 package com.francocouto.ecommerce.service;
 
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
@@ -20,6 +22,7 @@ import com.francocouto.ecommerce.repositories.ProductRepository;
 import com.francocouto.ecommerce.service.exeptions.DataErrorExepition;
 import com.francocouto.ecommerce.service.exeptions.ResourseNotFoundExeption;
 
+
 @Service
 public class ProductServise {
 
@@ -35,6 +38,12 @@ public class ProductServise {
 		Page<ProductProjectionDTO> dto = prod.map(x -> new ProductProjectionDTO(x));
 		return dto;
 	}
+	
+	@Transactional(readOnly = true)
+	public ProductMinDTO findById(Long id) {
+		Product obj = prodrepo.findById(id).orElseThrow(()-> new ResourseNotFoundExeption(id));
+		return new ProductMinDTO(obj);
+	}
 
 	@Transactional
 	public ProductMinDTO insert(ProductMinDTO dto) {
@@ -44,7 +53,7 @@ public class ProductServise {
 		product.setDescription(dto.getDescription());
 		product.setPrice(dto.getPrice());
 		product.setImgUrl(dto.getImgUrl());
-		for (CategoryDTO category : dto.getCat()) {
+		for (CategoryDTO category : dto.getCategories()) {
 			Category cat = catRepo.getReferenceById(category.getId());
 			product.getCategories().add(cat);
 			prodrepo.save(product);
@@ -73,7 +82,7 @@ public class ProductServise {
 		try {
 			prodrepo.deleteById(id);
 		} catch (DataIntegrityViolationException e) {
-			throw new DataErrorExepition("ID nao encontrado");
+			throw new DataErrorExepition("Integridade referencial violada");
 
 		}
 	}

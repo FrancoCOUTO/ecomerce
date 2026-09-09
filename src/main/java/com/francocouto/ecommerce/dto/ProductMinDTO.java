@@ -64,7 +64,7 @@ public class ProductMinDTO {
 		return imgUrl;
 	}
 
-	public List<CategoryDTO> getCat() {
+	public List<CategoryDTO> getCategories() {
 		return categories;
 	}
 }
