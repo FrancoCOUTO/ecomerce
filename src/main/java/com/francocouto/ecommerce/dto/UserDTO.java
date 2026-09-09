@@ -8,6 +8,7 @@ import org.springframework.security.core.GrantedAuthority;
 
 import com.francocouto.ecommerce.entities.User;
 
+import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
@@ -18,6 +19,7 @@ public class UserDTO {
 	@NotBlank(message = "O nome nao pode ser vasio")
 	private String name;
 	@NotNull(message = "O e-mail nao pode ser vazio")
+	@Column(unique = true)
 	private String email;
 	@NotBlank(message = "O telefone nao pode ser vasio")
 	private String phone;

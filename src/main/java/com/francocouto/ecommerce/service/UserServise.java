@@ -8,21 +8,27 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.francocouto.ecommerce.dto.UserDTO;
+import com.francocouto.ecommerce.dto.UserInsertDTO;
 import com.francocouto.ecommerce.entities.Role;
 import com.francocouto.ecommerce.entities.User;
 import com.francocouto.ecommerce.projections.UserDetailProjection;
 import com.francocouto.ecommerce.repositories.UserRepository;
+import com.francocouto.ecommerce.service.exeptions.ResourseNotFoundExeption;
 
 @Service
 public class UserServise implements UserDetailsService {
 
 	@Autowired
 	private UserRepository userRepo;
+	
+	@Autowired
+	private PasswordEncoder encoder;
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -64,4 +70,79 @@ public class UserServise implements UserDetailsService {
 		return new UserDTO(user);
 	}
 
+		@Transactional	
+		public UserDTO insert(UserInsertDTO dto) {
+			User user = new User();
+			user.setEmail(dto.getEmail());
+			user.setName(dto.getName());
+			user.setBirthDate(dto.getBirthDate());
+			user.setPhone(dto.getPhone());
+			user.setPassword(encoder.encode(dto.getPassword()));
+			Role role = new Role();
+			role.setId(1L);
+			user.addRole(role);
+			userRepo.save(user);
+			return new UserDTO(user);
+	
+		}
+		
+		public UserDTO update(Long id , UserInsertDTO dto) {
+			User user = userRepo.getReferenceById(id);
+			
+			user.setName(dto.getName());
+			user.setEmail(dto.getEmail());
+			user.setBirthDate(dto.getBirthDate());
+			user.setPhone(dto.getPhone());
+			if (dto.getPassword() != null && !dto.getPassword().isBlank()) {
+		        user.setPassword(encoder.encode(dto.getPassword()));
+		    }
+			user = userRepo.save(user);
+			return new UserDTO(user);
+			
+			
+		}
+		
+		public void delete(Long id) {
+			userRepo.deleteById(id);
+		}
+
+		
 }
+
+
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
