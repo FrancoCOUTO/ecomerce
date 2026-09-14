@@ -9,15 +9,21 @@ O E-commerce API é uma aplicação back-end (API REST) construída durante o cu
 A aplicação consiste em um sistema de loja virtual, onde os administradores podem gerenciar o catálogo de produtos e categorias, e os clientes podem navegar pelos itens de forma paginada para registrar pedidos. Toda a proteção de rotas, autenticação e controle de permissões (Cliente/Admin) é gerenciada por um sistema de segurança robusto utilizando OAuth2 e tokens JWT.
 
 ## Layout mobile
-![Mobile 1](https://github.com/acenelio/assets/raw/main/sds1/mobile1.png) ![Mobile 2](https://github.com/acenelio/assets/raw/main/sds1/mobile2.png)
+![Mobile](https://github.com/FrancoCOUTO/ecomerce/blob/main/assets/leyautMobile.png) 
 
 ## Layout web
-![Web 1](https://github.com/acenelio/assets/raw/main/sds1/web1.png)
+![Login](https://github.com/FrancoCOUTO/ecomerce/blob/main/assets/login.png)
 
-![Web 2](https://github.com/acenelio/assets/raw/main/sds1/web2.png)
+![Carrinho de compras](https://github.com/FrancoCOUTO/ecomerce/blob/main/assets/carrinho.png)
+![Catálogo](https://github.com/FrancoCOUTO/ecomerce/blob/main/assets/Catalogo.png)
+![Produto](https://github.com/FrancoCOUTO/ecomerce/blob/main/assets/produto.png)
+![Pedido](https://github.com/FrancoCOUTO/ecomerce/blob/main/assets/pedido.png)
+![Área administrativa](https://github.com/FrancoCOUTO/ecomerce/blob/main/assets/area%20administrativa1.png)
+![CRUD de produto](https://github.com/FrancoCOUTO/ecomerce/blob/main/assets/CRUD%20de%20produtos.png)
+![Ciar produto](https://github.com/FrancoCOUTO/ecomerce/blob/main/assets/criarProduto.png)
 
 ## Modelo conceitual
-![Modelo Conceitual](https://github.com/acenelio/assets/raw/main/sds1/modelo-conceitual.png)
+![Modelo Conceitual](https://github.com/FrancoCOUTO/ecomerce/blob/main/assets/modelo%20conceitual.png)
 
 # Tecnologias utilizadas
 ## Back end
@@ -30,48 +36,24 @@ A aplicação consiste em um sistema de loja virtual, onde os administradores po
 - ReactJS
 - React Native
 - Apex Charts
-- Expo
-## Implantação em produção
-- Back end: Heroku
-- Front end web: Netlify
-- Banco de dados: Postgresql
-
 # Como executar o projeto
 
 ## Back end
-Pré-requisitos: Java 11
+Pré-requisitos: Java 17 ou superior
 
 ```bash
 # clonar repositório
-git clone https://github.com/devsuperior/sds1-wmazoni
+git clone [https://github.com/FrancoCOUTO/ecommerce.git](https://github.com/FrancoCOUTO/ecommerce.git)
 
 # entrar na pasta do projeto back end
-cd backend
+cd ecommerce
 
 # executar o projeto
 ./mvnw spring-boot:run
 ```
-
-## Front end web
-Pré-requisitos: npm / yarn
-
-```bash
-# clonar repositório
-git clone https://github.com/devsuperior/sds1-wmazoni
-
-# entrar na pasta do projeto front end web
-cd front-web
-
-# instalar dependências
-yarn install
-
-# executar o projeto
-yarn start
-```
-
 # Autor
 
-Wellington Mazoni de Andrade
+Franco Couto Alves Pinto
 
-https://www.linkedin.com/in/wmazoni
+francocoutoalves@gmail.com
 
